@@ -24,3 +24,8 @@ Writing a script capable of monitoring the printer status and queue size and tri
 7. Configurable thresholds value for the notification (queue size/state).
 8. Configurable webhook url for Slack and Teams.
 9. Exit values required for TaskSchelduler.
+
+## Nice to haves (If not to much work)
+
+- If a printer is in an error state for (lets say) 2 day's send notification that Printer X is in error for X days
+-- How to know if the printer is in error state. Write a log somewhere so that keeps track of the printer sate or something. Think you have a better view at what we can use fo this.
