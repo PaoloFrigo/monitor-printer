@@ -49,5 +49,4 @@ $Critical = $NumberOfPrintJobs -ge $CriticalThreshold                   #BOOLEAN
 #Printout 
 Write-Output $PrinterName, $PrinterStatus, $NumberOfPrintJobs, $Critical 
 ```
-I've spent about 2.5 hours to make it more reusable and configurable in the future and adding loggin and libraries.
-
+I've spent about 2.5 hours for turning these few lines of code into something more reusable and configurable in the future and adding logging and libraries and eventually to run tests.
