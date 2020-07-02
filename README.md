@@ -29,3 +29,25 @@ Writing a script capable of monitoring the printer status and queue size and tri
 
 - If a printer is in an error state for (lets say) 2 day's send notification that Printer X is in error for X days
 - How to know if the printer is in error state. Write a log somewhere so that keeps track of the printer sate or something. Think you have a better view at what we can use fo this.
+
+
+## Notes 02/07/2020
+
+I've wrote this in 5 minutes.
+```
+#Paolo Frigo, https://www.scriptinglibrary.com
+
+#USER SETTINGS
+$PrinterName        = "AutoDoc HSE"
+$CriticalThreshold  = 8
+
+#REQUIREMENTS
+$PrinterStatus = (Get-Printer -Name $PrinterName).printerstatus         #STRING
+$NumberOfPrintJobs = 9 #(Get-PrintJob -PrinterName $PrinterName).Count  #INT 
+$Critical = $NumberOfPrintJobs -ge $CriticalThreshold                   #BOOLEAN
+
+#Printout 
+Write-Output $PrinterName, $PrinterStatus, $NumberOfPrintJobs, $Critical 
+```
+I've spent about 2.5 hours to make it more reusable and configurable in the future and adding loggin and libraries.
+

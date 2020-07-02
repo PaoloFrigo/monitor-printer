@@ -21,6 +21,3 @@ function Slack-Notification {
         
     Invoke-RestMethod -uri $ChannelUri -Method Post -body $BodyTemplate.replace("MESSAGE", $Message) -ContentType 'application/json'
 }
-
-
-#Slack-Notification -ChannelUri "***REMOVED***" -Message "This is another test at $(get-date)"
