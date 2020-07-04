@@ -50,14 +50,14 @@ This script can run on demand or can be scheduled to run periodically.
 Regarding scheduling this script the choice between using [Task Scheduler or Powershell Scheduled Jobs](https://devblogs.microsoft.com/scripting/using-scheduled-tasks-and-scheduled-jobs-in-powershell/) is left to the administrator.
 
 
-## Customizing Notifications
+## CUSTOMIZING NOTIFICATIONS
 MS Teams Slack Notifications can be tweaked by changing the template in the __slack-notification.ps1__ or __teams-notification.ps1__ script included the lib folder.
 
 These settings have been left __'hard-coded'__ to avoid validating or managing malformed request and errors with the respective services. 
 
 All information to edit these templetes will be available on the official website of the service provider.
 
-## Logging
+## LOGGING
 
 If you need to change your logging settings or format you can edit your __append-log.ps1__ script.
 
