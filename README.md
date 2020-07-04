@@ -51,7 +51,7 @@ Regarding scheduling this script the choice between using [Task Scheduler or Pow
 
 
 ## Customizing Notifications
-MS Teams Slack Notifications can be tweaked by changing the template in the respective template in the lib folder.
+MS Teams Slack Notifications can be tweaked by changing the template in the __slack-notification.ps1__ or __teams-notification.ps1__ script included the lib folder.
 
 These settings have been left __'hard-coded'__ to avoid validating or managing malformed request and errors with the respective services. 
 
@@ -59,7 +59,9 @@ All information to edit these templetes will be available on the official websit
 
 ## Logging
 
-This shows the simple log functionality
+If you need to change your logging settings or format you can edit your __append-log.ps1__ script.
+
+This shows the simple log functionality. 
 
 ```
 02/07/2020 11:28:06 - CRITICAL: AutoDoc HSE (state: Paused). Jobs currently in queue: 9 at 07/02/2020 20:28:06
