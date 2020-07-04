@@ -1,52 +1,48 @@
 # Monitor-Printer
 
-## Printer Monitoring and Alerting Solution
-Notes from skype chat 22/06/2020
+[ReadMe](README.md)
 
-## SCENARIO
+## DESCRIPTION
 
-An Autodoc HSE Printer (by streamlinesoftware.net) is installed on a window server and the number of printing jobs in the queue can grow during the day to few thousands.
+This Powershell script it is designed to be scheduled and for monitoring status and number of jobs in the queue of any installed printer on a Windows Workstation or Server.
 
-Frequently the printer is rebooted to get it to function properly and users will submit the print jobs again.
-
-## SOLUTION DESCRIPTION
-
-Writing a script capable of monitoring the printer status and queue size and trigger Teams/Slack notification message if the number of jobs is bigger than a threshold value or if the printer is not in the desired state (e.g. ready/online).
+If the number of jobs exceeds the specific threshold set by the user a notification is sent with the critical state to the user via a chat message via a Teams/Slack channel.
 
 ## REQUIREMENTS
 
-1. Reading the number of Jobs in the print queue for a specific printer.
-2. Reading the status of a specific printer.
-3. Setting up a threshold and desidered state to trigger notifications.
-4. Trigger webhook notifications to slack/teams.
-5. Notification message should include the __printer state__ and __size of the queue__.
-6. Configurable printer name (or list of printer names).
-7. Configurable thresholds value for the notification (queue size/state).
-8. Configurable webhook url for Slack and Teams.
-9. Exit values required for TaskSchelduler.
+All the [requirements](doc/requirements.md) for this solution were provided by Kay Van Aarssen [(ICTWebSolutions)](www.ictwebsolution.nl).
 
-## Nice to haves (If not to much work)
+## AUTHOR
+Paolo Frigo [(www.scriptinglibrary.com)](https://www.scriptinglibrary.com)
 
-- If a printer is in an error state for (lets say) 2 day's send notification that Printer X is in error for X days
-- How to know if the printer is in error state. Write a log somewhere so that keeps track of the printer sate or something. Think you have a better view at what we can use fo this.
+## NOTES
 
+[Author notes and informations](doc/notes.md)
 
-## Notes 02/07/2020
+## CONFIGURATION / SETTINGS
 
-I've wrote this in 5 minutes.
+User settings are included in this region, placed in the top of the __monitor-printer.ps1__ script.
+
+```powershell
+#region USER SETTINGS
+$PrinterName                = "AutoDoc HSE"
+$CriticalThreshold          = 8 
+$NotificationChannelTokens  = ("", "")# expects multiple values, comma separated like https://hooks.slack.com/... or https://outlook.office.com/webhook/...
+$LogFile                    = "monitor-printer.log"
+#endregion
 ```
-#Paolo Frigo, https://www.scriptinglibrary.com
 
-#USER SETTINGS
-$PrinterName        = "AutoDoc HSE"
-$CriticalThreshold  = 8
+This a summary of the settings with type and description.
 
-#REQUIREMENTS
-$PrinterStatus = (Get-Printer -Name $PrinterName).printerstatus         #STRING
-$NumberOfPrintJobs = 9 #(Get-PrintJob -PrinterName $PrinterName).Count  #INT 
-$Critical = $NumberOfPrintJobs -ge $CriticalThreshold                   #BOOLEAN
+|Key|Type|Description|
+|---|---|---|
+|PrinterName| String | Name of the printer to monitor (e.g. "AutoDoc HSE") |
+|CriticalThreshold|Int| Number of pring jobs in the queue which if breached will trigger a notification|
+|NotificationChannelTokes|String[]|List of webhook url (uri+token) addresses for sending inbound messages to MS Teams or Slack channels|
+|LogFile|String|Name of the logfile with extension (e.g. monitor-printer.log)|
 
-#Printout 
-Write-Output $PrinterName, $PrinterStatus, $NumberOfPrintJobs, $Critical 
-```
-I've spent about 2.5 hours for turning these few lines of code into something more reusable and configurable in the future and adding logging and libraries and eventually to run tests.
+## RUNNING THIS SCRIPT AS A SCHEDULED TASK/JOB
+
+This script can run on demand or can be scheduled to run periodically.
+
+Regarding scheduling this script the choice between using [Task Scheduler or Powershell Scheduled Jobs](https://devblogs.microsoft.com/scripting/using-scheduled-tasks-and-scheduled-jobs-in-powershell/) is left to the administrator.
