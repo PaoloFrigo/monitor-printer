@@ -7,9 +7,9 @@
 
 ### PROOF OF CONCEPT (POC)
 
-I've written the Powershell script in 5 minutes.
+I've written the following Powershell script in 5 minutes.
 
-The __printmanagment__  module has cmdlets that returns all the required informations.
+The __printmanagment__  module has cmd-lets that returns all required informations.
 
 ```powershell
 #Paolo Frigo, https://www.scriptinglibrary.com
@@ -29,7 +29,7 @@ Write-Output $PrinterName, $PrinterStatus, $NumberOfPrintJobs, $Critical
 
 ### FIRST RELEASE
 
-I've spent about 2.5 hours for turning these few lines of code into something more reusable and configurable in the future.
+I've spent about 2.5 hours for turning these few lines of code into something more robust, reusable and more importantly configurable in the future.
 
 I've added logging functionality, decoupled part of external functionalities into libraries (in a lib folder) and finally listed a set of useful tests (still in progress) for code coverage and continuous integration (CI).
 
