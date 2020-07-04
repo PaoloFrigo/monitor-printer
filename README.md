@@ -48,3 +48,33 @@ This a summary of the settings with type and description.
 This script can run on demand or can be scheduled to run periodically.
 
 Regarding scheduling this script the choice between using [Task Scheduler or Powershell Scheduled Jobs](https://devblogs.microsoft.com/scripting/using-scheduled-tasks-and-scheduled-jobs-in-powershell/) is left to the administrator.
+
+
+## Customizing Notifications
+MS Teams Slack Notifications can be tweaked by changing the template in the respective template in the lib folder.
+
+These settings have been left __'hard-coded'__ to avoid validating or managing malformed request and errors with the respective services. 
+
+All information to edit these templetes will be available on the official website of the service provider.
+
+## Logging
+
+This shows the simple log functionality
+
+```
+02/07/2020 11:28:06 - CRITICAL: AutoDoc HSE (state: Paused). Jobs currently in queue: 9 at 07/02/2020 20:28:06
+02/07/2020 11:28:07 - Slack notification sent
+02/07/2020 11:31:08 - CRITICAL: AutoDoc HSE (state: Paused). Jobs currently in queue: 9 at 07/02/2020 20:31:08
+02/07/2020 11:31:09 - Slack notification sent
+02/07/2020 11:31:11 - Teams notification sent
+
+```
+
+To display just the CRITICAL status you can use this one-liner
+
+```powershell
+Get-Content .\monitor-printer.log | Select-String -AllMatches "CRITICAL"
+
+02/07/2020 11:28:06 - CRITICAL: AutoDoc HSE (state: Paused). Jobs currently in queue: 9 at 07/02/2020 23:28:06
+02/07/2020 11:31:08 - CRITICAL: AutoDoc HSE (state: Paused). Jobs currently in queue: 9 at 07/02/2020 23:31:08
+```
