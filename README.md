@@ -4,9 +4,11 @@
 
 ## DESCRIPTION
 
-This Powershell script it is designed to be scheduled and for monitoring status and number of jobs in the queue of any installed printer on a Windows Workstation or Server.
+This Powershell script it is designed for monitoring status and number of jobs in the queue of any installed printer on a Windows Workstation or Server.
 
 If the number of jobs exceeds the specific threshold set by the user a notification is sent with the critical state to the user via a chat message via a Teams/Slack channel.
+
+The execution can be scheduled or run on demand.
 
 ## REQUIREMENTS
 
