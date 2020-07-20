@@ -2,6 +2,7 @@
 
 [ReadMe](../README.md) > [Notes](notes.md)
 
+______________
 ## Notes 
 02/07/2020
 
@@ -26,7 +27,7 @@ $Critical = $NumberOfPrintJobs -ge $CriticalThreshold                   #BOOLEAN
 #Printout 
 Write-Output $PrinterName, $PrinterStatus, $NumberOfPrintJobs, $Critical
 ```
-
+________________________
 ### FIRST RELEASE
 
 I've spent about 2.5 hours for turning these few lines of code into something more robust, reusable and more importantly configurable in the future.
@@ -35,6 +36,11 @@ I've added logging functionality, decoupled part of external functionalities int
 
 I've re-organised the documentation and readme (another 30 minutes). 
 
+____________________________________
+
+## Notes 
+20/07/2020
+
 ### SECOND RELEASE
 
-I've spent about 1.5 hour for adding the [improvements](improvements.md) on long printing jobs and re-organise and update the documentation.
+I've spent about 1.5 hour for adding the [improvements](improvements.md) on long printing jobs and another 15 minutes re-organise and update the documentation.
