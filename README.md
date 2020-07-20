@@ -12,7 +12,7 @@ The execution can be scheduled or run on demand.
 
 ## REQUIREMENTS
 
-All the [requirements](doc/requirements.md) for this solution were provided by Kay Van Aarssen [(ICTWebSolutions)](www.ictwebsolution.nl).
+All the [requirements](doc/requirements.md) for this solution were provided by Kay Van Aarssen [(ICTWebSolutions)](www.ictwebsolution.nl). Please see the note section for updates.
 
 ## AUTHOR
 Paolo Frigo [(www.scriptinglibrary.com)](https://www.scriptinglibrary.com)
@@ -32,6 +32,13 @@ $PrinterName                = "AutoDoc HSE"
 $CriticalThreshold          = 8 
 $NotificationChannelTokens  = ("", "")# expects multiple values, comma separated like https://hooks.slack.com/... or https://outlook.office.com/webhook/...
 $LogFile                    = "monitor-printer.log"
+$PrintingJobXMLFile         = "last-printing-job.xml"
+$PrinterName                = "AutoDoc HSE"
+$CriticalThreshold          = 8 
+$NotificationChannelTokens  = ("", "")# expects multiple values, comma separated like https://hooks.slack.com/... or https://outlook.office.com/webhook/...
+$LogFile                    = "monitor-printer.log"
+$PrintingJobXMLFile         = "last-printing-job.xml"
+$TimeThresholdPrintingJob   = 5 #if a job is printing for more than N minutes
 #endregion
 ```
 
@@ -42,7 +49,9 @@ This a summary of the settings with type and description.
 |PrinterName| String | Name of the printer to monitor (e.g. "AutoDoc HSE") |
 |CriticalThreshold|Int| Number of pring jobs in the queue which if breached will trigger a notification|
 |NotificationChannelTokes|String[]|List of webhook url (uri+token) addresses for sending inbound messages to MS Teams or Slack channels|
-|LogFile|String|Name of the logfile with extension (e.g. monitor-printer.log)|
+|LogFile|String|Name of the log file including the extension (e.g. monitor-printer.log)|
+|PrintingJobXMLFile|String|Name of the xml file including the extension (e.g. last-printing-job.xml)|
+|TimeThresholdPrintingJob|Int|Max number of minutes for a job in PRINTING state (e.g. 5)|
 
 ## RUNNING THIS SCRIPT AS A SCHEDULED TASK/JOB
 
@@ -66,10 +75,13 @@ This shows the simple log functionality.
 
 ```
 02/07/2020 11:28:06 - CRITICAL: AutoDoc HSE (state: Paused). Jobs currently in queue: 9 at 07/02/2020 20:28:06
-02/07/2020 11:28:07 - Slack notification sent
+02/07/2020 11:28:07 - NOTIFICATION: Slack message sent
 02/07/2020 11:31:08 - CRITICAL: AutoDoc HSE (state: Paused). Jobs currently in queue: 9 at 07/02/2020 20:31:08
-02/07/2020 11:31:09 - Slack notification sent
-02/07/2020 11:31:11 - Teams notification sent
+02/07/2020 11:31:09 - NOTIFICATION: Slack message sent
+02/07/2020 11:31:11 - NOTIFICATION: Teams message sent
+20/07/2020 10:17:36 - CRITICAL: AutoDoc HSE (state: Normal). Jobs currently in queue: 6 at 07/20/2020 22:17:36. Job ID 9 still in PRINTING state since 07/20/2020 21:10:02 by User Administrator on MyServer, document name: Test Page - printed pages: 1/1 - size 4584819
+20/07/2020 10:17:37 - NOTIFICATION: Slack notification sent
+20/07/2020 10:17:39 - NOTIFICATION: Teams message sent
 
 ```
 
@@ -80,4 +92,5 @@ Get-Content .\monitor-printer.log | Select-String -AllMatches "CRITICAL"
 
 02/07/2020 11:28:06 - CRITICAL: AutoDoc HSE (state: Paused). Jobs currently in queue: 9 at 07/02/2020 23:28:06
 02/07/2020 11:31:08 - CRITICAL: AutoDoc HSE (state: Paused). Jobs currently in queue: 9 at 07/02/2020 23:31:08
+20/07/2020 10:17:36 - CRITICAL: AutoDoc HSE (state: Normal). Jobs currently in queue: 6 at 07/20/2020 22:17:36. Job ID 9 still in PRINTING state since 07/20/2020 21:10:02 by User Administrator on MyServer, document name: Test Page - printed pages: 1/1 - size 4584819
 ```
