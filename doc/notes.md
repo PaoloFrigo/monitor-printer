@@ -43,4 +43,4 @@ ____________________________________
 
 ### SECOND RELEASE
 
-I've spent about 1.5 hour for adding the [improvements](improvements.md) on long printing jobs and another 15 minutes re-organise and update the documentation.
+I've spent about 1.5 hours for adding the [improvements](improvements.md) on long printing jobs and another 15 minutes re-organise and update the documentation.
