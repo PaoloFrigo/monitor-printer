@@ -27,19 +27,12 @@ Paolo Frigo [(www.scriptinglibrary.com)](https://www.scriptinglibrary.com)
 User settings are included in this region, placed in the top of the __monitor-printer.ps1__ script.
 
 ```powershell
-#region USER SETTINGS
 $PrinterName                = "AutoDoc HSE"
 $CriticalThreshold          = 8 
 $NotificationChannelTokens  = ("", "")# expects multiple values, comma separated like https://hooks.slack.com/... or https://outlook.office.com/webhook/...
 $LogFile                    = "monitor-printer.log"
 $PrintingJobXMLFile         = "last-printing-job.xml"
-$PrinterName                = "AutoDoc HSE"
-$CriticalThreshold          = 8 
-$NotificationChannelTokens  = ("", "")# expects multiple values, comma separated like https://hooks.slack.com/... or https://outlook.office.com/webhook/...
-$LogFile                    = "monitor-printer.log"
-$PrintingJobXMLFile         = "last-printing-job.xml"
-$TimeThresholdPrintingJob   = 5 #if a job is printing for more than N minutes
-#endregion
+$TimeThresholdPrintingJob   = 5 # minutes
 ```
 
 This a summary of the settings with type and description.
