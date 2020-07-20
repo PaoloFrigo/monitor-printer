@@ -34,3 +34,7 @@ I've spent about 2.5 hours for turning these few lines of code into something mo
 I've added logging functionality, decoupled part of external functionalities into libraries (in a lib folder) and finally listed a set of useful tests (still in progress) for code coverage and continuous integration (CI).
 
 I've re-organised the documentation and readme (another 30 minutes). 
+
+### SECOND RELEASE
+
+I've spent about 1.5 hour for adding the [improvements](improvements.md) on long printing jobs and re-organise and update the documentation.
