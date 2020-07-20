@@ -19,7 +19,8 @@ Paolo Frigo [(www.scriptinglibrary.com)](https://www.scriptinglibrary.com)
 
 ## NOTES
 
-[Author notes and informations](doc/notes.md)
+* [Author notes and informations](doc/notes.md)
+* [Improvements after the first release](doc/improvements.md)
 
 ## CONFIGURATION / SETTINGS
 
