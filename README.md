@@ -22,9 +22,9 @@ Paolo Frigo [(www.scriptinglibrary.com)](https://www.scriptinglibrary.com)
 * [Author notes and informations](doc/notes.md)
 * [Improvements after the first release](doc/improvements.md)
 
-## CONFIGURATION / SETTINGS
+## CONFIGURATION / USER SETTINGS
 
-User settings are included in this region, placed in the top of the __monitor-printer.ps1__ script.
+User settings are included in the __config-setting.ps1__ script.
 
 ```powershell
 $PrinterName                = "AutoDoc HSE"

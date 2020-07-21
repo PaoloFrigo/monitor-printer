@@ -7,17 +7,8 @@
 Set-Location -path $PSScriptRoot
 #endregion 
 
-#region USER SETTINGS
-$PrinterName                = "AutoDoc HSE"
-$CriticalThreshold          = 8 
-$NotificationChannelTokens  = ("", "")# expects multiple values, comma separated like https://hooks.slack.com/... or https://outlook.office.com/webhook/...
-$LogFile                    = "monitor-printer.log"
-$PrintingJobXMLFile         = "last-printing-job.xml"
-$TimeThresholdPrintingJob   = 5 # minutes
-#endregion
-
 #region CHECK DEPENDENCIES AND IMPORT THEM WITH DOT SOURCING
-$Dependencies = "\lib\append-log.ps1", "\lib\slack-notification.ps1", "\lib\teams-notification.ps1"
+$Dependencies = "\config-setting.ps1", "\lib\append-log.ps1", "\lib\slack-notification.ps1", "\lib\teams-notification.ps1"
 
 foreach ($Dependency in $Dependencies){
     if ((Test-Path "$($PSScriptRoot)$Dependency") -eq $False){
