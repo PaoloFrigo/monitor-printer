@@ -1,5 +1,6 @@
 #requires -module printmanagement
 
+# Monitor-Printer V.1.1
 #Paolo Frigo, https://www.scriptinglibrary.com
 
 #region SET THE WORKING DIRECTORY
@@ -14,7 +15,6 @@ $LogFile                    = "monitor-printer.log"
 $PrintingJobXMLFile         = "last-printing-job.xml"
 $TimeThresholdPrintingJob   = 5 # minutes
 #endregion
-
 
 #region CHECK DEPENDENCIES AND IMPORT THEM WITH DOT SOURCING
 $Dependencies = "\lib\append-log.ps1", "\lib\slack-notification.ps1", "\lib\teams-notification.ps1"
@@ -37,7 +37,7 @@ if ((Test-Path -Path $LogFile) -eq $false){
 
 # CREATE A PrintingJobXMLFile FILE IF IS NOT EXISTS
 if ((Test-Path -Path $PrintingJobXMLFile) -eq $false){
-    New-Item "$PrintingJobXMLFile"
+    "" | Select-Object computername, printername, jobstatus, id, documentname, pagesprinted, totalpages, size, username, submittedtime,NotePropertyValue |  Export-Clixml "$PrintingJobXMLFile"
 }
 #endregion
 
@@ -63,13 +63,15 @@ $PrintingJob = get-printjob -PrinterName $PrinterName |
         Select-Object computername, printername, jobstatus, id, documentname, pagesprinted, totalpages, size, username, submittedtime |
             Add-Member -NotePropertyName "printingat" -NotePropertyValue "$(get-date)"
 
-if ($PrintingJob){
-    $PrintingJob | Export-Clixml $PrintingJobXMLFile #update the XML File
+if ($PrintingJob){    
     $LongRunningPrintingJob = ($PrintingJob.id -eq $LastPrintingJob.id) -and ([datetime]$PrintingJob.StillPrintingAt) -lt $(get-date).AddMinutes($TimeThresholdPrintingJob) 
+    if ($LongRunningPrintingJob -eq $False){
+        $PrintingJob | Export-Clixml $PrintingJobXMLFile #update the XML File
+    }    
 }
 else {
     #There are no long running printing jobs 
-    New-Item "$PrintingJobXMLFile" -force #clean-up the XML File 
+    "" | Select-Object computername, printername, jobstatus, id, documentname, pagesprinted, totalpages, size, username, submittedtime,NotePropertyValue |  Export-Clixml "$PrintingJobXMLFile"
     $LongRunningPrintingJob = $false
 }
 #endregion
@@ -83,7 +85,7 @@ if ($Critical) {
     if ($LongRunningPrintingJob){
         $Message += " Job ID $($LastPrintingJob.id) still in PRINTING state since $($LastPrintingJob.StillPrintingAt) by User $($LastPrintingJob.username) on $($LastPrintingJob.computername), document name: $($LastPrintingJob.documentname) - printed pages: $($LastPrintingJob.pagesprinted)/$($LastPrintingJob.totalpages) - size $($LastPrintingJob.size)"
     }
-
+    
     Write-Warning $Message
     Append-Log -LogFile $LogFile -Message $Message
     

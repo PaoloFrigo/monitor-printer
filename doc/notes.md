@@ -28,7 +28,7 @@ $Critical = $NumberOfPrintJobs -ge $CriticalThreshold                   #BOOLEAN
 Write-Output $PrinterName, $PrinterStatus, $NumberOfPrintJobs, $Critical
 ```
 ________________________
-### FIRST RELEASE
+### FIRST RELEASE - V.1.0
 
 I've spent about 2.5 hours for turning these few lines of code into something more robust, reusable and more importantly configurable in the future.
 
@@ -41,6 +41,6 @@ ____________________________________
 ## Notes 
 20/07/2020
 
-### SECOND RELEASE
+### SECOND RELEASE - V.1.1
 
 I've spent about 1.5 hours for adding the [improvements](improvements.md) on long printing jobs and another 15 minutes re-organise and update the documentation.
