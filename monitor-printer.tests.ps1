@@ -1,36 +1,76 @@
+﻿#requires -module  @{ ModuleName="Pester"; ModuleVersion="5.0.0" }
 #Paolo Frigo, https://www.scriptinglibrary.com
 
-# WIP: PESTER Tests are not completed in this phase.
-#      for this reason the following line is commented out.
-#. .\monitor-printer.ps1 
+. $PSScriptRoot\config-setting.ps1
+
 
 describe "DEPENDENCY CHECKS" {
-    
-    it 'fails if one libary is missing'{
-        
-    }  
+
+    it "fails if one libary is missing"{
+        Mock Get-Printer {
+            $MyPrinter = "" | Select-object "Name","ComputerName","Type","DriverName","PortName","Shared","Published","DeviceType"
+            $MyPrinter.Name = $printername
+            return $myprinter
+        }
+        Mock Get-PrintJob {
+            return
+        }
+        Mock New-Item {}
+        mock "Test-Path"{ $False }
+        {. $PSScriptRoot\monitor-printer.ps1  } | Should -Throw
+    }
 }
 
 describe "FUNCTIONAL CHECKS" {
-    it 'creates a log file if does not exists'{
-        
-    }   
-    it 'fails if printername is not found'{
-        
+    it "creates a log file if does not exists"{
+        Mock Get-Printer {
+            $MyPrinter = "" | Select-object "Name","ComputerName","Type","DriverName","PortName","Shared","Published","DeviceType"
+            $MyPrinter.Name = $printername
+            return $myprinter
+        }
+        Mock Get-PrintJob {
+            return
+        }
+        Mock Test-Path -ParameterFilter {$Path -like $LogFile} {Return $False}
+        Mock New-Item { $False}
+        Mock Add-Content {$True}
+        . $PSScriptRoot\monitor-printer.ps1
+        Assert-MockCalled New-Item
     }
-    it 'if number of jobs is higher than queue sends out notifications'{
-        
-    }
-}
 
-describe "NOTIFICATIONS CHECKS" {
-    it 'if uri cointains slack send out slack notifications'{
-        
-    }  
-    it 'if uri cointains outlook send out teams notifications'{
-        
-    } 
-    it 'if uri is not recognised throws an error'{
-        
-    }    
+
+    it "fails if printername `"$($PrinterName)`" is not found"{
+        Mock Write-Warning {}
+        Mock Add-Content {$True}
+        Mock Set-Content {$True}
+        Mock Get-Printer {
+            $MyPrinter = "" | Select-object "Name","ComputerName","Type","DriverName","PortName","Shared","Published","DeviceType"
+            $MyPrinter.Name = ""
+            return $myprinter
+        }
+        Mock Get-PrintJob {
+            return
+        }
+        Mock New-Item {}
+        { . $PSScriptRoot\monitor-printer.ps1 } | Should -throw "* NOT FOUND. PLEASE CHECK YOUR USER SETTINGS"
+
+    }
+
+    it "if number of jobs in the queue > the critical threshold `($($CriticalThreshold)`) trigger the notifications"{
+        Mock Write-Warning {}
+        Mock Add-Content {$True}
+        Mock Set-Content {$True}
+        Mock Get-Printer {
+            $MyPrinter = "" | Select-object "Name","ComputerName","Type","DriverName","PortName","Shared","Published","DeviceType"
+            $MyPrinter.Name = $printername
+            return $myprinter
+        }
+        Mock Get-PrintJob {# -ParameterFilter {$printername -like $PrinterName} {
+            $FakeJobsList = [int[]]::new( $CriticalThreshold + 1 )
+            return $FakeJobsList
+        }
+        Mock New-Item {}
+        . $PSScriptRoot\monitor-printer.ps1
+        Assert-MockCalled Write-Warning -ParameterFilter {$Message -like "CRITICAL*"}
+    }
 }

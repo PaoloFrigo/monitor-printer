@@ -1,4 +1,4 @@
-#Paolo Frigo, https://www.scriptinglibrary.com
+﻿#Paolo Frigo, https://www.scriptinglibrary.com
 function Slack-Notification {
     [CmdletBinding()]
     param (
@@ -7,7 +7,7 @@ function Slack-Notification {
         $ChannelUri,
         [Parameter(Mandatory=$true)]
         [string]
-        $Message  
+        $Message
     )
 
     $BodyTemplate = @"
@@ -18,6 +18,6 @@ function Slack-Notification {
     "icon_emoji":":printer:"
     }
 "@
-        
+
     Invoke-RestMethod -uri $ChannelUri -Method Post -body $BodyTemplate.replace("MESSAGE", $Message) -ContentType 'application/json'
 }

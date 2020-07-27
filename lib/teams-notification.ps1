@@ -1,4 +1,4 @@
-#Paolo Frigo, https://www.scriptinglibrary.com
+﻿#Paolo Frigo, https://www.scriptinglibrary.com
 
 
 function Teams-Notification {
@@ -26,6 +26,6 @@ function Teams-Notification {
         ]
     }
 "@
-    
+
     Invoke-RestMethod -uri $ChannelUri -Method Post -body $BodyTemplate.replace("MESSAGE", $Message) -ContentType 'application/json'
 }

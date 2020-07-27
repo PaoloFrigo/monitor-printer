@@ -87,3 +87,27 @@ Get-Content .\monitor-printer.log | Select-String -AllMatches "CRITICAL"
 02/07/2020 11:31:08 - CRITICAL: AutoDoc HSE (state: Paused). Jobs currently in queue: 9 at 07/02/2020 23:31:08
 20/07/2020 10:17:36 - CRITICAL: AutoDoc HSE (state: Normal). Jobs currently in queue: 6 at 07/20/2020 22:17:36. Job ID 9 still in PRINTING state since 07/20/2020 21:10:02 by User Administrator on MyServer, document name: Test Page - printed pages: 1/1 - size 4584819
 ```
+
+## TESTING 
+
+I've created few tests for this solution using Pester (v.5).
+
+```powershell
+PS D:\Git\monitor-printer> Invoke-Pester -Output Detailed
+
+Starting discovery in 1 files.
+Discovering in monitor-printer.tests.ps1.
+Found 4 tests. 7ms
+Discovery finished in 12ms.
+
+Running tests from 'monitor-printer.tests.ps1'
+Describing DEPENDENCY CHECKS
+  [+] fails if one libary is missing 19ms (18ms|1ms)
+
+Describing FUNCTIONAL CHECKS
+  [+] creates a log file if does not exists 60ms (59ms|1ms)
+  [+] fails if printername "AutoDoc HSE" is not found 39ms (38ms|1ms)
+  [+] if number of jobs in the queue > the critical threshold (8) trigger the notifications 46ms (46ms|1ms)
+Tests completed in 254ms
+Tests Passed: 4, Failed: 0, Skipped: 0 NotRun: 0
+```
